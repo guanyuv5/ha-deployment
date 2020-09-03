@@ -314,10 +314,10 @@ Percentage of the requests served within a certain time (ms)
   99%      8
  100%     22 (longest request)
 ```
-测试结果：通过对workload增加prestopHook 和 readinessProbe配置后，可以保证服务优雅退出和稳定启动。
+测试结果：通过对workload增加preStopHook 和 readinessProbe配置后，可以保证服务优雅退出和稳定启动。
 
 #### 参考
 
-https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/  
+https://kubernetes.io/docs/tasks/run-application/configure-pdb/  
 https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/

@@ -153,6 +153,8 @@ nginx-deployment-658fb6cb8d-ldb6x   1/1     Running             0          19m  
 
 为nginx-deployment 创建 nodeport svc
 ```shell script
+[root@VM-240-97-centos test]# kubectl create -f nginx-pod-antiaffinity-preferred.yaml
+[root@VM-240-97-centos test]# kubectl  create -f nodeport.yaml
 [root@VM-240-97-centos test]# kubectl  get svc
 NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
 nginx-deployment   NodePort    172.23.254.178   <none>        80:32261/TCP   89s
@@ -248,10 +250,9 @@ periodSeconds: 10
 创建 workload, 并重复上面的步骤进行压测,再次观察压测是否被中断
 
 ```shell script
-[root@VM-240-97-centos test]# kubectl create -f nginx-pod-antiaffinity-preferred.yaml
+[root@VM-240-97-centos test]# kubectl create -f nginx-pod-antiaffinity-preferred-with-readinessProbe.yaml
 执行发布更新,同时开启压测
 [root@VM-240-97-centos test]# kubectl set image deploy nginx-deployment nginx=nginx:1.19
-[root@VM-240-97-centos test]# ab -n 100000 -c 10 http://172.21.64.101:32261/
 [root@VM-240-97-centos test]# ab -n 100000 -c 10 http://172.21.64.101:32261/
 This is ApacheBench, Version 2.3 <$Revision: 1430300 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
@@ -269,7 +270,6 @@ Completed 80000 requests
 Completed 90000 requests
 Completed 100000 requests
 Finished 100000 requests
-
 
 Server Software:        nginx/1.19.2
 Server Hostname:        172.21.64.101
